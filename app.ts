@@ -1,12 +1,17 @@
 // =========== Literals ===================
+// Creating custom aliases
+type Combinable = number | string;
+type  ConversionDescriptor = 'as-number' | 'as-text';
+
 const combine = (
-    input1: number | string, 
-    input2: number | string, 
+    input1: Combinable, 
+    input2: Combinable, 
     //resultConversion: string
+
     // Limiting resultConversion types to a Union type
-    resultConversion: 'as-number' | 'as-text'
+    resultConversion: ConversionDescriptor
     ) => {
-    //let result: number | string;
+    //let result: Combinable;
     let result;
     if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
         // Adding + in front of input1 to force it become a number
