@@ -1,3 +1,4 @@
+// 18. Arrays Types
 // ============ Arrays =====================
 // Type for array of strings
 //let favActivities: string[];

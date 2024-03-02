@@ -1,3 +1,4 @@
+// 24. && 25.
 // Type Aliases
 type Combinable = number | string;
 type ConversionDes = 'as-number' | 'as-text';

@@ -1,3 +1,4 @@
+// 22. Union Types
 // =========== Union ===================
 const combine = (
     input1: number | string, 

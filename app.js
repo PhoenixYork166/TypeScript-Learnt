@@ -1,6 +1,4 @@
-// 26. Function Return Types & :void 
-// 27. Functions as Types
-
+// 28. Functions Types & Callbacks
 // Type inference 
 // Let TypeScript infer the type
 // The result returned must match the Type of Descriptor
@@ -50,3 +48,19 @@ combineValues = add; // passing in a func
 console.log("\n");
 console.log("We are here: ");
 console.log("combineValues: ".concat(combineValues(8, 8))); //16
+// 28. Functions Types && Callbacks
+// calling back addAndHandle()
+// passing in 2 number arguments 
+// and an anonymous function
+// Adding a func addAndHanle()
+// passing in n1: number, n2: number, cb: callback(num: number) => void
+// cb: callback(num: number) => void means cb may return Nothing
+var addAndHandle = function (n1, n2, cb) {
+    var result = n1 + n2;
+    cb(result);
+};
+console.log("28. Functions Types && Callbacks");
+console.log("\n");
+addAndHandle(10, 20, function (result) {
+    console.log("result: ".concat(result));
+});

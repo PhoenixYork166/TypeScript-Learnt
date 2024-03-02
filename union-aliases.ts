@@ -1,3 +1,4 @@
+// 22.
 // Custom type to accept number OR string
 type Combinable = number | string;
 type ConversionDescriptor = 'as-number' | 'as-text';

@@ -1,3 +1,6 @@
+// 24. && 25.
+// Type Aliases
+
 // =========== Union ===================
 var combine = function (
 // Union Type

@@ -1,3 +1,6 @@
+// 26. Function Return Types & :void 
+// 27. Functions as Types
+
 // Type inference 
 // Let TypeScript infer the type
 // The result returned must match the Type of Descriptor

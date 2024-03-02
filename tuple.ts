@@ -1,3 +1,4 @@
+// 19.
 // ========== Tuple [1, 'Hi'] ============
 const person: {
     name: string;
