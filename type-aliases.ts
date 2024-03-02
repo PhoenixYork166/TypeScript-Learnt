@@ -1,18 +1,18 @@
 // Type Aliases
-// type Combinable = number | string;
-// type ConversionDes = 'as-number' | 'as-text';
+type Combinable = number | string;
+type ConversionDes = 'as-number' | 'as-text';
 
 // =========== Union ===================
 const combine = (
     // Union Type
-    input1: number | string, 
-    input2: number | string,
+    input1: Combinable, 
+    input2: Combinable,
     //resultConversion: string,
     
     // Literal Type
-    resultConversion: 'as-number' | 'as-text'
+    resultConversion: ConversionDes
     ) => {
-    let result;
+    let result: Combinable;
 
     if (
         typeof input1 === 'number' && 

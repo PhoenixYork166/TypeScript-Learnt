@@ -1,66 +1,21 @@
-// =========== Literals ===================
-// Creating custom aliases
-type Combinable = number | string;
-type  ConversionDescriptor = 'as-number' | 'as-text';
+// Type inference 
+// Let TypeScript infer the type
+// The result returned must match the Type of Descriptor
 
-const combine = (
-    input1: Combinable, 
-    input2: Combinable, 
-    //resultConversion: string
-
-    // Limiting resultConversion types to a Union type
-    resultConversion: ConversionDescriptor
-    ) => {
-    //let result: Combinable;
-    let result;
-    if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
-        // Adding + in front of input1 to force it become a number
-        result = +input1 + +input2;
-    } else {
-        result = input1.toString() + input2.toString();
-    }
-    return result;
-
-    // if (resultConversion === 'as-number') {
-    //     return parseFloat(result);
-    // } else {
-    //     return result.toString();
-    // }
+// const add = (n1: number, n2: number): number => {...}
+// const add = (...):number = type of returned value
+const add = (n1: number, n2: number): number => {
+    return n1 + n2;
 }
 
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
-
-const combinedStringAges = combine('30', '26', 'as-number');
-console.log(`combinedStringAges: ${combinedStringAges}`);
-
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
-
-
-
-
-
-
-
-
-
-
-
-
-// const add = (n1: number, n2: number, showResult: boolean, phrase: string) => {
-//     const result = n1 + n2;
-
-//     if (showResult) {
-//         console.log(phrase + result);
-
-//     } else {
-//         return result;
-//     }
+// If we manually concatenate n1.toString() && n2.toString()
+// const add = (n1: number, n2: number): string => {
+//     return n1.toString() + n2.toString();
 // }
 
-// const number1 = 5;
-// const number2 = 10;
-// const result = true;
-// const phraseShow = 'Result is: ';
-// add(number1, number2, result, phraseShow);
+const printResult = (num: number) => {
+    console.log(`Result: ${+num}`);
+    console.log(`typeof +num: ${typeof +num}`);
+}
+
+printResult(add(5, 12));
