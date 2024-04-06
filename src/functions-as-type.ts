@@ -7,7 +7,7 @@
 
 // const add = (n1: number, n2: number): number => {...}
 // const add = (...):number = type of returned value
-const add = (n1: number, n2: number): number => {
+const add2 = (n1: number, n2: number): number => {
     return n1 + n2;
 }
 
@@ -19,38 +19,38 @@ const add = (n1: number, n2: number): number => {
 // This Arrow func does NOT have a 'return' statement
 // const printResult = (...):void => 
 // it does NOT return anything
-const printResult = (num: number): void => {
+const printResult2 = (num: number): void => {
     // Concatenating num to number(num)
     console.log(`Result: ${+num}`);
     console.log(`typeof +num: ${typeof +num}`);
 }
 
-printResult(add(5, 12));
+printResult2(add2(5, 12));
 
 // undefined = valid type
 let someValue: undefined;
 
 // However, a function is NOT allowed to be type 'undefined'
 // This is Incorrect
-const printUndefined = (num2: number): undefined => {
+const printUndefined2 = (num2: number): undefined => {
     console.log(`Result: ${+num2}`);
     console.log(`typeof +num2: ${typeof +num2}`);
     // Use a return to make it work...
     return;
 }
 
-printUndefined(add(5,12))
+printUndefined2(add2(5,12))
 
 // Making sure that 'combineValues' will hold a func
 // let combineValues: Function;
 
 // Specifying the return type of a func
 // Forcing combineValues func = a func that returns a number
-let combineValues: (a: number, b: number) => number;
+let combineValues2: (a: number, b: number) => number;
 
 // TS does NOT complain add() as a func to take 2 arguments
 // && returning a number result
-combineValues = add; // passing in a func
+combineValues2 = add2; // passing in a func
 
 // combineValues = 5; // this gives an error
 
@@ -62,4 +62,4 @@ combineValues = add; // passing in a func
 
 console.log(`\n`);
 console.log(`We are here: `);
-console.log(`combineValues: ${combineValues(8, 8)}`); //16
+console.log(`combineValues: ${combineValues2(8, 8)}`); //16

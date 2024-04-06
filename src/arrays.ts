@@ -6,7 +6,7 @@
 //favActivities = 'Sports';
 //favActivities = ['Sports', 'Cooking'];
 
-const person: {
+const person2: {
     name: string;
     age: number;
     hobbies: string[];
@@ -20,7 +20,7 @@ const person: {
 };
 
 // From JS
-for (const hobby of person.hobbies) {
+for (const hobby of person2.hobbies) {
     console.log(hobby.toUpperCase());
     // will NOT get .map() because hobby !array
     //console.log(hobby.map());

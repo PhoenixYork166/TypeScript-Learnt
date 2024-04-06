@@ -1,6 +1,6 @@
 // 23.
 // =========== Union ===================
-const combine = (
+const combine2 = (
     // Union Type
     input1: number | string, 
     input2: number | string,
@@ -29,11 +29,11 @@ const combine = (
     // }    
 }
 
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
+const combinedAges2 = combine(30, 26, 'as-number');
+console.log(`combinedAges: ${combinedAges2}`);
 
-const combinedStringAges = combine(30, 26, 'as-text');
-console.log(`combinedStringAges: ${combinedStringAges}`);
+const combinedStringAges2 = combine(30, 26, 'as-text');
+console.log(`combinedStringAges: ${combinedStringAges2}`);
 
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
+const combinedNames2 = combine('Max', 'Anna', 'as-text');
+console.log(`combinedNames: ${combinedNames2}`);

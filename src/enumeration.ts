@@ -9,7 +9,7 @@ enum Role {
     OWNER = 777, 
 };
 
-const person: {
+const person1: {
     name: string;
     age: number;
     hobbies: string[];
@@ -30,8 +30,8 @@ const person: {
 
 // Using Switch operator to reflect all roles 
 // that the person has
-for (let i=0; i < person.role.length; i++) {
-    switch (person.role[i]) {
+for (let i=0; i < person1.role.length; i++) {
+    switch (person1.role[i]) {
         case Role.ADMIN:
             console.log('Person is an admin');
             break;
@@ -49,7 +49,7 @@ for (let i=0; i < person.role.length; i++) {
             break;
 
         default:
-            console.log(`Person has an unknown role: ${person.role[i]}`);
+            console.log(`Person has an unknown role: ${person1.role[i]}`);
             break;
     }
 }

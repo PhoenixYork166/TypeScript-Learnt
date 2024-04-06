@@ -28,16 +28,16 @@
 // const READ_ONLY = 1;
 // const AUTHOR = 2;
 
-enum Role { ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 200 };
+//enum Role { ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 200 };
 
-const person = {
+const user = {
     name: 'Max',
     age: 30,
     hobbies: ['Sports', 'Cooking'],
     role: Role.ADMIN,
 };
 
-if (person.role === Role.ADMIN) {
+if (user.role === Role.ADMIN) {
     console.log(`person is admin`);
 }
 

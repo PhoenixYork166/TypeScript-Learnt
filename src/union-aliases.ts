@@ -1,12 +1,12 @@
 // 22.
 // Custom type to accept number OR string
-type Combinable = number | string;
-type ConversionDescriptor = 'as-number' | 'as-text';
+type Combinable4 = number | string;
+type ConversionDescriptor4 = 'as-number' | 'as-text';
 
-const combine = (
-    input1: Combinable,
-    input2: Combinable,
-    resultConversion: ConversionDescriptor
+const combine4 = (
+    input1: Combinable4,
+    input2: Combinable4,
+    resultConversion: ConversionDescriptor4
 ) => {
     // Allows hoisting
     let result;

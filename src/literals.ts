@@ -1,6 +1,6 @@
 // 23.
 // =========== Literals ===================
-const combine = (
+const combine1 = (
     input1: number | string, 
     input2: number | string, 
     //resultConversion: string
@@ -24,14 +24,14 @@ const combine = (
     // }
 }
 
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
+const combinedAges1 = combine(30, 26, 'as-number');
+console.log(`combinedAges: ${combinedAges1}`);
 
-const combinedStringAges = combine('30', '26', 'as-number');
-console.log(`combinedStringAges: ${combinedStringAges}`);
+const combinedStringAges1 = combine('30', '26', 'as-number');
+console.log(`combinedStringAges: ${combinedStringAges1}`);
 
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
+const combinedNames1 = combine('Max', 'Anna', 'as-text');
+console.log(`combinedNames: ${combinedNames1}`);
 
 
 

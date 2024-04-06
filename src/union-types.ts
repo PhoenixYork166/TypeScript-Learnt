@@ -1,6 +1,6 @@
 // 22. Union Types
 // =========== Union ===================
-const combine = (
+const combine5 = (
     input1: number | string, 
     input2: number | string
     ) => {
@@ -14,8 +14,8 @@ const combine = (
     return result;
 }
 
-const combinedAges = combine(30, 26);
+const combinedAges = combine5(30, 26);
 console.log(`combinedAges: ${combinedAges}`);
 
-const combinedNames = combine('Max', 'Anna');
+const combinedNames = combine5('Max', 'Anna');
 console.log(`combinedNames: ${combinedNames}`);

@@ -1,19 +1,19 @@
 // 24. && 25.
 // Type Aliases
-type Combinable = number | string;
-type ConversionDes = 'as-number' | 'as-text';
+type Combinable3 = number | string;
+type ConversionDes3 = 'as-number' | 'as-text';
 
 // =========== Union ===================
-const combine = (
+const combine3 = (
     // Union Type
-    input1: Combinable, 
-    input2: Combinable,
+    input1: Combinable3, 
+    input2: Combinable3,
     //resultConversion: string,
     
     // Literal Type
-    resultConversion: ConversionDes
+    resultConversion: ConversionDes3
     ) => {
-    let result: Combinable;
+    let result: Combinable3;
 
     if (
         typeof input1 === 'number' && 
@@ -33,11 +33,11 @@ const combine = (
     // }    
 }
 
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
+const combinedAges3 = combine3(30, 26, 'as-number');
+console.log(`combinedAges3: ${combinedAges3}`);
 
-const combinedStringAges = combine(30, 26, 'as-text');
-console.log(`combinedStringAges: ${combinedStringAges}`);
+const combinedStringAges3 = combine3(30, 26, 'as-text');
+console.log(`combinedStringAges3: ${combinedStringAges3}`);
 
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
+const combinedNames3 = combine3('Max', 'Anna', 'as-text');
+console.log(`combinedNames3: ${combinedNames3}`);
