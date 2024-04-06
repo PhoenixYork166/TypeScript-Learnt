@@ -1,14 +1,12 @@
-// 24. && 25.
-// Type Aliases
-
+"use strict";
 // =========== Union ===================
-var combine = function (
+const combine = (
 // Union Type
 input1, input2, 
 //resultConversion: string,
 // Literal Type
-resultConversion) {
-    var result;
+resultConversion) => {
+    let result;
     if (typeof input1 === 'number' &&
         typeof input2 === 'number' ||
         resultConversion === 'as-number') {
@@ -25,9 +23,9 @@ resultConversion) {
     //     return result.toString();
     // }    
 };
-var combinedAges = combine(30, 26, 'as-number');
-console.log("combinedAges: ".concat(combinedAges));
-var combinedStringAges = combine(30, 26, 'as-text');
-console.log("combinedStringAges: ".concat(combinedStringAges));
-var combinedNames = combine('Max', 'Anna', 'as-text');
-console.log("combinedNames: ".concat(combinedNames));
+const combinedAges = combine(30, 26, 'as-number');
+console.log(`combinedAges: ${combinedAges}`);
+const combinedStringAges = combine(30, 26, 'as-text');
+console.log(`combinedStringAges: ${combinedStringAges}`);
+const combinedNames = combine('Max', 'Anna', 'as-text');
+console.log(`combinedNames: ${combinedNames}`);
