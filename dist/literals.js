@@ -1,7 +1,7 @@
 "use strict";
 // 23.
 // =========== Literals ===================
-const combine = (input1, input2, 
+const combine1 = (input1, input2, 
 //resultConversion: string
 // Limiting resultConversion types to a Union type
 resultConversion) => {
@@ -21,12 +21,12 @@ resultConversion) => {
     //     return result.toString();
     // }
 };
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
-const combinedStringAges = combine('30', '26', 'as-number');
-console.log(`combinedStringAges: ${combinedStringAges}`);
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
+const combinedAges1 = combine1(30, 26, 'as-number');
+console.log(`combinedAges1: ${combinedAges1}`);
+const combinedStringAges1 = combine1('30', '26', 'as-number');
+console.log(`combinedStringAges1: ${combinedStringAges1}`);
+const combinedNames1 = combine1('Max', 'Anna', 'as-text');
+console.log(`combinedNames1: ${combinedNames1}`);
 // const add = (n1: number, n2: number, showResult: boolean, phrase: string) => {
 //     const result = n1 + n2;
 //     if (showResult) {

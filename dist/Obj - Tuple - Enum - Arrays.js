@@ -24,20 +24,14 @@
 // const ADMIN = 0;
 // const READ_ONLY = 1;
 // const AUTHOR = 2;
-var Role;
-(function (Role) {
-    Role["ADMIN"] = "ADMIN";
-    Role[Role["READ_ONLY"] = 100] = "READ_ONLY";
-    Role[Role["AUTHOR"] = 200] = "AUTHOR";
-})(Role || (Role = {}));
-;
-const person = {
+//enum Role { ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 200 };
+const user = {
     name: 'Max',
     age: 30,
     hobbies: ['Sports', 'Cooking'],
     role: Role.ADMIN,
 };
-if (person.role === Role.ADMIN) {
+if (user.role === Role.ADMIN) {
     console.log(`person is admin`);
 }
 // ============ END OF Enum ===============

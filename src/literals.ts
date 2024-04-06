@@ -24,14 +24,14 @@ const combine1 = (
     // }
 }
 
-const combinedAges1 = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges1}`);
+const combinedAges1 = combine1(30, 26, 'as-number');
+console.log(`combinedAges1: ${combinedAges1}`);
 
-const combinedStringAges1 = combine('30', '26', 'as-number');
-console.log(`combinedStringAges: ${combinedStringAges1}`);
+const combinedStringAges1 = combine1('30', '26', 'as-number');
+console.log(`combinedStringAges1: ${combinedStringAges1}`);
 
-const combinedNames1 = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames1}`);
+const combinedNames1 = combine1('Max', 'Anna', 'as-text');
+console.log(`combinedNames1: ${combinedNames1}`);
 
 
 

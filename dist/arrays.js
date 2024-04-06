@@ -6,14 +6,14 @@
 // Will ERR if ! array
 //favActivities = 'Sports';
 //favActivities = ['Sports', 'Cooking'];
-const person = {
+const person2 = {
     name: 'Max',
     age: 30,
     hobbies: ['Sports', 'Cooking'],
     role: [2, 'author'],
 };
 // From JS
-for (const hobby of person.hobbies) {
+for (const hobby of person2.hobbies) {
     console.log(hobby.toUpperCase());
     // will NOT get .map() because hobby !array
     //console.log(hobby.map());

@@ -1,6 +1,6 @@
 "use strict";
 // =========== Union ===================
-const combine = (
+const combine3 = (
 // Union Type
 input1, input2, 
 //resultConversion: string,
@@ -23,9 +23,9 @@ resultConversion) => {
     //     return result.toString();
     // }    
 };
-const combinedAges = combine(30, 26, 'as-number');
-console.log(`combinedAges: ${combinedAges}`);
-const combinedStringAges = combine(30, 26, 'as-text');
-console.log(`combinedStringAges: ${combinedStringAges}`);
-const combinedNames = combine('Max', 'Anna', 'as-text');
-console.log(`combinedNames: ${combinedNames}`);
+const combinedAges3 = combine3(30, 26, 'as-number');
+console.log(`combinedAges3: ${combinedAges3}`);
+const combinedStringAges3 = combine3(30, 26, 'as-text');
+console.log(`combinedStringAges3: ${combinedStringAges3}`);
+const combinedNames3 = combine3('Max', 'Anna', 'as-text');
+console.log(`combinedNames3: ${combinedNames3}`);

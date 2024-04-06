@@ -1,5 +1,5 @@
 "use strict";
-const combine = (input1, input2, resultConversion) => {
+const combine4 = (input1, input2, resultConversion) => {
     // Allows hoisting
     let result;
     if (typeof input1 === 'number' &&
