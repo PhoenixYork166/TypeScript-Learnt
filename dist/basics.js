@@ -1,5 +1,5 @@
 "use strict";
-const add = (n1, n2, showResult, phrase) => {
+const add3 = (n1, n2, showResult, phrase) => {
     // in the past...
     // if (typeof n1 !== 'number' || typeof n2 !== 'number') {
     //     throw new Error('Incorrect input!');
@@ -21,4 +21,4 @@ const number2 = 2.8;
 const printResult = true;
 let resultPhrase;
 resultPhrase = 'Result is: ';
-add(number1, number2, printResult, resultPhrase);
+add3(number1, number2, printResult, resultPhrase);
