@@ -1,39 +1,35 @@
-// Intersection Type => Combining Types
-
-// recap interface
-// interface Admin {
-//     name: string,
-//     privileges: string[],
-// };
-// =====================================
-
-// Approach 1 => Intersection type
-// Intersection type combines Object types
-// type Admin = {
-//     name: string;
-//     privileges: string[];
-// };
-
-// type Employee = {
-//     name: string;
-//     startDate: Date;
-// };
-
-// type ElevatedEmployee = Admin & Employee;
-
-// Approach 2 => interfaces
-interface Admin {
-    name: string,
-    privileges: string[],
+// 1 common property across interfaces
+// to make up the UNION
+interface Bird {
+    type: 'bird',
+    flyingSpeed: number,
 }
-interface Employee {
-    name: string,
-    startDate: Date;
+interface Horse {
+    type: 'horse',
+    runningSpeed: number,
 }
-interface ElevatedEmployee extends Admin, Employee {};
 
-const employee2: ElevatedEmployee = {
-    name: 'Max',
-    privileges: ['create-server'],
-    startDate: new Date(),
-};
+// Union type
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+    let speed: number;
+
+    switch (animal.type) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+            break
+    }
+    console.log(`Moving at speed: ${speed}`);
+}
+
+moveAnimal({type: 'bird', flyingSpeed: 100});
+
+// type casting
+const paragraph = document.getElementById('message-output')! as HTMLParagraphElement;
+const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
+
+userInputElement.value = 'Hi there';
