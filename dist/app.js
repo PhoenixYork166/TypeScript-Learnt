@@ -1,18 +1,24 @@
 "use strict";
-function moveAnimal(animal) {
-    let speed;
-    switch (animal.type) {
-        case 'bird':
-            speed = animal.flyingSpeed;
-            break;
-        case 'horse':
-            speed = animal.runningSpeed;
-            break;
+function addAgain1(a, b) {
+    // type guard
+    if (typeof a === 'string' || typeof b === 'string') {
+        return a.toString() + b.toString();
     }
-    console.log(`Moving at speed: ${speed}`);
+    else if (typeof a === 'string' && typeof b === 'number') {
+        return a + b.toString();
+    }
+    else if (typeof a === 'number' && typeof b === 'string') {
+        return a.toString() + b;
+    }
+    return +a + +b;
 }
-moveAnimal({ type: 'bird', flyingSpeed: 100 });
-// type casting
-const paragraph = document.getElementById('message-output');
-const userInputElement = document.getElementById('user-input');
-userInputElement.value = 'Hi there';
+const result1 = addAgain1(1, 5);
+result1.toString();
+console.log(`result1: ${result1}`);
+const result2 = addAgain1('Max', ' Schwarz');
+result2.split(' ');
+console.log(`result2: ${result2}`);
+const result3 = addAgain1('Max ', 10);
+console.log(`result3: ${result3}`);
+const result4 = addAgain1(10, ' Max');
+console.log(`result4: ${result4}`);
