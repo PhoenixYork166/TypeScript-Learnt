@@ -15,3 +15,11 @@ console.log(`mergedObj.name`);
 console.log(mergedObj1.name);
 console.log(`mergedObj.age`);
 console.log(mergedObj1.age);
+// keyof constraint
+// this ensures U is a key of T object
+function extractAndConvert(obj, key) {
+    return 'Value: ' + obj[key];
+}
+const extract1 = extractAndConvert({ name: 'Max' }, 'name');
+console.log(`extract1`);
+console.log(extract1);
