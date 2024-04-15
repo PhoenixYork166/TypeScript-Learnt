@@ -25,7 +25,7 @@ function WithTemplate2(template: string, hookId: string) {
         ) {
          return class extends originalConstructor {
             constructor(..._: any[]) {
-                super(); // calling originalConstructor
+                super(); // calling originalConstructor => saved original function
                 console.log(`Rendering template`); // 3. Rendering template
                 const hookEl = document.getElementById(hookId);
                 //const p = new originalConstructor();

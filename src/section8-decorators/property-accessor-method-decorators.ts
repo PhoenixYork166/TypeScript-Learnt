@@ -10,6 +10,7 @@ function Log2(target: any, name: string, descriptior: PropertyDescriptor) {
     console.log(target); // object
     console.log(name);
     console.log(descriptior); // object
+    //return {enumerable};
 }
 
 // Method Decorator

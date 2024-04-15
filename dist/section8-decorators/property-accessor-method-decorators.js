@@ -19,6 +19,7 @@ function Log2(target, name, descriptior) {
     console.log(target); // object
     console.log(name);
     console.log(descriptior); // object
+    //return {enumerable};
 }
 // Method Decorator
 function Log3(target, name, descriptior) {
