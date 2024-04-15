@@ -22,6 +22,7 @@ const firstNum2 = getFirstElement2(numbers);
 const strings2 = ['123', '456', '789'];
 const firstString2 = getFirstElement2(strings);
 
+// More Complicated yet Flexible Generic Functions
 function getObjectKey<ObjectType extends object, ObjectKey extends keyof ObjectType>(
     obj: ObjectType, 
     key: ObjectKey) {
