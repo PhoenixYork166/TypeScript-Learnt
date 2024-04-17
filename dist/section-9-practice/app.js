@@ -5,6 +5,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+// Project Type
+var ProjectStatus;
+(function (ProjectStatus) {
+    ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
+    ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
+})(ProjectStatus || (ProjectStatus = {}));
+class Project {
+    constructor(id, title, description, people, status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.people = people;
+        this.status = status;
+    }
+}
 // Project State Management similar to Redux for React || NgRx for Angular
 class ProjectState {
     constructor() {
@@ -24,12 +39,13 @@ class ProjectState {
         this.listeners.push(listenerFn);
     }
     addProject(title, description, numOfPeople) {
-        const newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: description,
-            people: numOfPeople
-        };
+        const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
+        // const newProject = {
+        //     id: Math.random().toString(),
+        //     title: title,
+        //     description: description,
+        //     people: numOfPeople
+        // };
         this.projects.push(newProject);
         for (const listenerFn of this.listeners) {
             // only parse in a copy of this.projects
@@ -95,7 +111,17 @@ class ProjectList {
         this.element.id = `${this.type}-projects`;
         // to register a listener function
         projectState.addListener((projects) => {
-            this.assignedProjects = projects;
+            // true => keep item in newly created Project[]
+            // then stored in relevantProjects 
+            // false => drop the item from the new list
+            const relevantProjects = projects.filter(prj => {
+                if (this.type === 'active') {
+                    return prj.status === ProjectStatus.Active;
+                }
+                return prj.status === ProjectStatus.Finished;
+            });
+            //this.assignedProjects = projects;
+            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
         this.attach();
@@ -103,9 +129,15 @@ class ProjectList {
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);
+        // get rid of all listed items => re-render again
+        // whenever we add render a new project
+        // we clear all existing projects
+        listEl.innerHTML = '';
         for (const projectItem of this.assignedProjects) {
             const listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
+            // To avoid unnecessary re-rendering & 
+            // check for rendered active projects before rendering
             listEl.appendChild(listItem);
         }
     }

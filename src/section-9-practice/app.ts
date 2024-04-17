@@ -1,7 +1,25 @@
+// Project Type
+enum ProjectStatus { Active, Finished }
+
+class Project {
+    constructor(
+        public id: string, 
+        public title: string, 
+        public description: string,
+        public people: number,
+        public status: ProjectStatus
+    ) {
+
+    }
+}
+
+// Project State Management
+type Listener = (items: Project[]) => void;
+
 // Project State Management similar to Redux for React || NgRx for Angular
 class ProjectState {
-    private listeners: any[] = []; // array of Functions
-    private projects: any[] = []; // array of stored projects
+    private listeners: Listener[] = []; // array of Functions
+    private projects: Project[] = []; // array of stored projects
     private static instance: ProjectState;
 
     private constructor() {
@@ -18,17 +36,24 @@ class ProjectState {
     }
 
     // used whenever project changes e.g. adding a new project
-    addListener(listenerFn: Function) {
+    addListener(listenerFn: Listener) {
         this.listeners.push(listenerFn);
     }
 
     addProject(title: string, description: string, numOfPeople: number) {
-        const newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: description,
-            people: numOfPeople
-        };
+        const newProject = new Project(
+            Math.random().toString(), 
+            title, 
+            description, 
+            numOfPeople,
+            ProjectStatus.Active
+            )
+        // const newProject = {
+        //     id: Math.random().toString(),
+        //     title: title,
+        //     description: description,
+        //     people: numOfPeople
+        // };
         this.projects.push(newProject);
         for (const listenerFn of this.listeners) {
             // only parse in a copy of this.projects
@@ -100,7 +125,7 @@ class ProjectList {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     element: HTMLElement;
-    assignedProjects: any[];
+    assignedProjects: Project[];
     
     constructor(private type: 'active' | 'finished') {
         this.templateElement = <HTMLTemplateElement>document.getElementById('project-list');
@@ -122,8 +147,18 @@ class ProjectList {
         this.element.id = `${this.type}-projects`;
         
         // to register a listener function
-        projectState.addListener((projects: any[]) => {
-            this.assignedProjects = projects;
+        projectState.addListener((projects: Project[]) => {
+            // true => keep item in newly created Project[]
+            // then stored in relevantProjects 
+            // false => drop the item from the new list
+            const relevantProjects = projects.filter(prj => {
+                if (this.type === 'active') {
+                    return prj.status === ProjectStatus.Active;
+                }
+                return prj.status === ProjectStatus.Finished;
+            });
+            //this.assignedProjects = projects;
+            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
         this.attach();
@@ -132,9 +167,17 @@ class ProjectList {
 
     private renderProjects() {
         const listEl = <HTMLUListElement>document.getElementById(`${this.type}-projects-list`);
+
+        // get rid of all listed items => re-render again
+        // whenever we add render a new project
+        // we clear all existing projects
+        listEl.innerHTML = '';
+
         for (const projectItem of this.assignedProjects) {
             const listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
+            // To avoid unnecessary re-rendering & 
+            // check for rendered active projects before rendering
             listEl.appendChild(listItem);
         }
     }
