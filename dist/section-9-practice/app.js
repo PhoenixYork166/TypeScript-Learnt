@@ -20,10 +20,19 @@ class Project {
         this.status = status;
     }
 }
-// Project State Management similar to Redux for React || NgRx for Angular
-class ProjectState {
+class State {
     constructor() {
         this.listeners = []; // array of Functions
+    }
+    // used whenever project changes e.g. adding a new project
+    addListener(listenerFn) {
+        this.listeners.push(listenerFn);
+    }
+}
+// Project State Management similar to Redux for React || NgRx for Angular
+class ProjectState extends State {
+    constructor() {
+        super();
         this.projects = []; // array of stored projects
     }
     // Limiting global scope to only has 1 instance of ProjectState
@@ -33,10 +42,6 @@ class ProjectState {
         }
         this.instance = new ProjectState();
         return this.instance;
-    }
-    // used whenever project changes e.g. adding a new project
-    addListener(listenerFn) {
-        this.listeners.push(listenerFn);
     }
     addProject(title, description, numOfPeople) {
         const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
@@ -120,19 +125,17 @@ class Component {
 // ProjectList Class
 class ProjectList extends Component {
     constructor(type) {
-        super();
+        //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
+        // false = ProjectList are NOT rendered at start of list
+        super('project-list', 'app', false, `${type}-projects`);
         this.type = type;
-        this.templateElement = document.getElementById('project-list');
-        this.hostElement = document.getElementById('app');
         this.assignedProjects = [];
-        // importNode() passes a pointer into HTMLElement
-        // importNode(templateElement, deepCloneBoolean)
-        const importedNode = document.importNode(this.templateElement.content, true);
-        // HTML Form Element
-        this.element = importedNode.firstElementChild; // <section class="projects">
-        // need a dynamic value for a number of lists of projects
-        // to inject relevant css based on type of listed projects
-        this.element.id = `${this.type}-projects`;
+        this.configure();
+        // this will happen in the base class
+        // this.attach();
+        this.renderContent();
+    }
+    configure() {
         // to register a listener function
         projectState.addListener((projects) => {
             // true => keep item in newly created Project[]
@@ -148,8 +151,13 @@ class ProjectList extends Component {
             this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
-        this.attach();
-        this.renderContent();
+    }
+    renderContent() {
+        // fill blank spaces in template with some lives
+        const listId = `${this.type}-projects-list`;
+        this.element.querySelector('ul').id = listId;
+        // selecting <h2></h2>
+        this.element.querySelector('h2').textContent = this.type.toUpperCase() + 'PROJECTS';
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);
@@ -165,36 +173,23 @@ class ProjectList extends Component {
             listEl.appendChild(listItem);
         }
     }
-    renderContent() {
-        // fill blank spaces in template with some lives
-        const listId = `${this.type}-projects-list`;
-        this.element.querySelector('ul').id = listId;
-        // selecting <h2></h2>
-        this.element.querySelector('h2').textContent = this.type.toUpperCase() + 'PROJECTS';
-    }
-    attach() {
-        // <ul></ul> is before end of </section>
-        this.hostElement.insertAdjacentElement('beforeend', this.element);
-    }
 }
 // Singleton design pattern
-class ProjectInput {
+class ProjectInput extends Component {
     constructor() {
-        this.templateElement = document.getElementById('project-input');
-        this.hostElement = document.getElementById('app');
-        // importNode() passes a pointer into HTMLElement
-        // importNode(templateElement, deepCloneBoolean)
-        const importedNode = document.importNode(this.templateElement.content, true);
-        // HTML Form Element
-        this.element = importedNode.firstElementChild;
-        // to inject css #user-input
-        this.element.id = 'user-input';
+        //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
+        // true = ProjectList are rendered at start of list
+        super('project-input', 'app', true, 'user-input');
         this.titleInputElement = this.element.querySelector('#title'); // <input type="text" id="title" />
         this.descriptionInputElement = this.element.querySelector('#description');
         this.peopleInputElement = this.element.querySelector('#people');
         this.configure();
-        this.attach();
     }
+    configure() {
+        // this.element.addEventListener('submit', this.submitHandler.bind(this)); // binding to this of submitHandler()
+        this.element.addEventListener('submit', this.submitHandler);
+    }
+    renderContent() { }
     // function type = tuple[string, string, number]
     gatherUserInput() {
         const enteredTitle = this.titleInputElement.value;
@@ -246,18 +241,6 @@ class ProjectInput {
             // clear userInputs after logging
             this.clearInputs();
         }
-    }
-    configure() {
-        // this.element.addEventListener('submit', this.submitHandler.bind(this)); // binding to this of submitHandler()
-        this.element.addEventListener('submit', this.submitHandler);
-    }
-    attach() {
-        // JavaScript default method to insert HTML element
-        // insertAdjacentElement(whereToInsert, )
-        // whereToInsert = afterbegin / afterend / beforebegine / beforend
-        // because this.templateElement = <HTMLTemplateElement>document.getElementById('project-input');
-        // thereform 'afterbegin' = <form></form>
-        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
 __decorate([

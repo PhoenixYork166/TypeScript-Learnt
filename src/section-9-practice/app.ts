@@ -14,16 +14,25 @@ class Project {
 }
 
 // Project State Management
-type Listener = (items: Project[]) => void;
+type Listener<T> = (items: T[]) => void;
+
+class State<T> {
+    protected listeners: Listener<T>[] = []; // array of Functions
+
+    // used whenever project changes e.g. adding a new project
+    addListener(listenerFn: Listener<T>) {
+        this.listeners.push(listenerFn);
+    }
+}
 
 // Project State Management similar to Redux for React || NgRx for Angular
-class ProjectState {
-    private listeners: Listener[] = []; // array of Functions
+class ProjectState extends State<Project> {
+    
     private projects: Project[] = []; // array of stored projects
     private static instance: ProjectState;
 
     private constructor() {
-
+        super();
     }
 
     // Limiting global scope to only has 1 instance of ProjectState
@@ -33,11 +42,6 @@ class ProjectState {
         }
         this.instance = new ProjectState();
         return this.instance;
-    }
-
-    // used whenever project changes e.g. adding a new project
-    addListener(listenerFn: Listener) {
-        this.listeners.push(listenerFn);
     }
 
     addProject(title: string, description: string, numOfPeople: number) {
@@ -169,25 +173,19 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     assignedProjects: Project[];
     
     constructor(private type: 'active' | 'finished') {
-        super();
-        this.templateElement = <HTMLTemplateElement>document.getElementById('project-list');
-        this.hostElement = <HTMLDivElement>document.getElementById('app');
-        this.assignedProjects = [];
-
-        // importNode() passes a pointer into HTMLElement
-        // importNode(templateElement, deepCloneBoolean)
-        const importedNode = document.importNode(
-            this.templateElement.content, 
-            true
-            );
-
-        // HTML Form Element
-        this.element = <HTMLElement>importedNode.firstElementChild; // <section class="projects">
-
-        // need a dynamic value for a number of lists of projects
-        // to inject relevant css based on type of listed projects
-        this.element.id = `${this.type}-projects`;
+        //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
+        // false = ProjectList are NOT rendered at start of list
+        super('project-list', 'app', false, `${type}-projects`);
         
+        this.assignedProjects = [];
+        
+        this.configure();
+        // this will happen in the base class
+        // this.attach();
+        this.renderContent();
+    }
+
+    configure() {
         // to register a listener function
         projectState.addListener((projects: Project[]) => {
             // true => keep item in newly created Project[]
@@ -203,8 +201,14 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
             this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
-        this.attach();
-        this.renderContent();
+    }
+
+    renderContent() {
+        // fill blank spaces in template with some lives
+        const listId = `${this.type}-projects-list`;
+        this.element.querySelector('ul')!.id = listId;
+        // selecting <h2></h2>
+        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + 'PROJECTS';
     }
 
     private renderProjects() {
@@ -223,53 +227,32 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
             listEl.appendChild(listItem);
         }
     }
-
-    private renderContent() {
-        // fill blank spaces in template with some lives
-        const listId = `${this.type}-projects-list`;
-        this.element.querySelector('ul')!.id = listId;
-        // selecting <h2></h2>
-        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + 'PROJECTS';
-    }
-
-    private attach() {
-        // <ul></ul> is before end of </section>
-        this.hostElement.insertAdjacentElement('beforeend', this.element);
-    }
 }
 
 // Singleton design pattern
-class ProjectInput {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
 
     constructor() {
-        this.templateElement = <HTMLTemplateElement>document.getElementById('project-input');
-        this.hostElement = <HTMLDivElement>document.getElementById('app');
-
-        // importNode() passes a pointer into HTMLElement
-        // importNode(templateElement, deepCloneBoolean)
-        const importedNode = document.importNode(
-            this.templateElement.content, 
-            true
-        );
-
-        // HTML Form Element
-        this.element = importedNode.firstElementChild as HTMLFormElement;
-        // to inject css #user-input
-        this.element.id = 'user-input';
+        //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
+        // true = ProjectList are rendered at start of list
+        super('project-input', 'app', true, 'user-input');
 
         this.titleInputElement = <HTMLInputElement>this.element.querySelector('#title'); // <input type="text" id="title" />
         this.descriptionInputElement = <HTMLInputElement>this.element.querySelector('#description'); 
         this.peopleInputElement = <HTMLInputElement>this.element.querySelector('#people'); 
 
         this.configure();
-        this.attach();
     }
+
+    configure() {
+        // this.element.addEventListener('submit', this.submitHandler.bind(this)); // binding to this of submitHandler()
+        this.element.addEventListener('submit', this.submitHandler);
+    }
+
+    renderContent() {}
 
     // function type = tuple[string, string, number]
     private gatherUserInput(): [string, string, number] | void {
@@ -330,21 +313,6 @@ class ProjectInput {
             // clear userInputs after logging
             this.clearInputs();
         }
-    }
-
-    private configure() {
-        // this.element.addEventListener('submit', this.submitHandler.bind(this)); // binding to this of submitHandler()
-        this.element.addEventListener('submit', this.submitHandler);
-    }
-
-    private attach() {
-        // JavaScript default method to insert HTML element
-        // insertAdjacentElement(whereToInsert, )
-        // whereToInsert = afterbegin / afterend / beforebegine / beforend
-
-        // because this.templateElement = <HTMLTemplateElement>document.getElementById('project-input');
-        // thereform 'afterbegin' = <form></form>
-        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
 
