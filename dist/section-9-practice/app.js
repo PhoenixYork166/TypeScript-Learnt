@@ -101,6 +101,7 @@ _2, descriptor) {
 }
 // Component Base Class
 // Similar to React, { Component } from 'react'
+// abstract class Component<T extends whereToRender, U extends elementToRender>
 class Component {
     constructor(templateId, hostElementId, insertAtStart, newElementId) {
         this.templateElement = document.getElementById(templateId);
@@ -122,7 +123,42 @@ class Component {
     }
     ;
 }
+// ProjectItem Class
+// class ProjectItem extends Component<T extends whereToRender, U extends elementToRender>
+class ProjectItem extends Component {
+    get persons() {
+        if (this.project.people === 1) {
+            return '1 person';
+        }
+        else {
+            return `${this.project.people} persons`;
+        }
+    }
+    constructor(hostId, project) {
+        super('single-project', hostId, false, project.id);
+        this.project = project;
+        this.configure();
+        this.renderContent();
+    }
+    // each ProjectItem does NOT need to do 'submit' action
+    configure() { }
+    renderContent() {
+        /*
+        <template id="single-project">
+            <li>
+                <h2><!-- Title of Project --></h2>
+                <h3><!-- Number of People --></h3>
+                <p><!-- Description --></p>
+            </li>
+        </template>
+        */
+        this.element.querySelector('h2').textContent = this.project.title;
+        this.element.querySelector('h3').textContent = this.persons + ' assigned to this project'; // typeof this.project.people = 'number'
+        this.element.querySelector('p').textContent = this.project.description;
+    }
+}
 // ProjectList Class
+// class ProjectList extends Component<T extends whereToRender, U extends elementToRender>
 class ProjectList extends Component {
     constructor(type) {
         //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
@@ -166,15 +202,19 @@ class ProjectList extends Component {
         // we clear all existing projects
         listEl.innerHTML = '';
         for (const projectItem of this.assignedProjects) {
+            /*
             const listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
-            // To avoid unnecessary re-rendering & 
+            // To avoid unnecessary re-rendering &
             // check for rendered active projects before rendering
             listEl.appendChild(listItem);
+            */
+            new ProjectItem(this.element.querySelector('ul').id, projectItem);
         }
     }
 }
 // Singleton design pattern
+// class ProjectInput extends Component<T extends whereToRender, U extends elementToRender>
 class ProjectInput extends Component {
     constructor() {
         //super(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string)
