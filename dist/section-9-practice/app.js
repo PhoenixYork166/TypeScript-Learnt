@@ -52,6 +52,19 @@ class ProjectState extends State {
         //     people: numOfPeople
         // };
         this.projects.push(newProject);
+        this.updateListeners();
+    }
+    // projectId = map this.projects: Project[] Array => flip status
+    moveProject(projectId, newStatus) {
+        const project = this.projects.find(prj => prj.id === projectId);
+        // check if project exists
+        if (project && project.status !== newStatus) {
+            // changing extracted project.status => newStatus
+            project.status = newStatus;
+            this.updateListeners();
+        }
+    }
+    updateListeners() {
         for (const listenerFn of this.listeners) {
             // only parse in a copy of this.projects
             // every listenerFn getting executed & 
@@ -140,8 +153,22 @@ class ProjectItem extends Component {
         this.configure();
         this.renderContent();
     }
+    dragStartHandler(event) {
+        console.log(`Drag starts`);
+        console.log(event);
+        // to actually do dragging
+        //event.dataTransfer!.setData(dataIdentifier, dataId);
+        event.dataTransfer.setData('text/plain', this.project.id);
+        event.dataTransfer.effectAllowed = 'move';
+    }
+    dragEndHandler(_) {
+        console.log(`Drag ended`);
+    }
     // each ProjectItem does NOT need to do 'submit' action
-    configure() { }
+    configure() {
+        this.element.addEventListener('dragstart', this.dragStartHandler);
+        this.element.addEventListener('dragend', this.dragEndHandler);
+    }
     renderContent() {
         /*
         <template id="single-project">
@@ -157,6 +184,12 @@ class ProjectItem extends Component {
         this.element.querySelector('p').textContent = this.project.description;
     }
 }
+__decorate([
+    Autobinding
+], ProjectItem.prototype, "dragStartHandler", null);
+__decorate([
+    Autobinding
+], ProjectItem.prototype, "dragEndHandler", null);
 // ProjectList Class
 // class ProjectList extends Component<T extends whereToRender, U extends elementToRender>
 class ProjectList extends Component {
@@ -171,7 +204,36 @@ class ProjectList extends Component {
         // this.attach();
         this.renderContent();
     }
+    dragOverHandler(event) {
+        if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+            // to disable JavaScript/TypeScript default Drop event being prohibited
+            event.preventDefault();
+            const listEl = this.element.querySelector('ul');
+            // add pink background: #ffe3ee when drag starts
+            listEl.classList.add('droppable');
+            console.log(`Drag Over has been detected!`);
+        }
+    }
+    dropHandler(event) {
+        console.log(`Drop detected!`);
+        console.log(event);
+        console.log(`\n`);
+        console.log(`Attempting to retrieve:\nevent.dataTransfer!.getData('text/plain')`);
+        console.log(event.dataTransfer.getData('text/plain'));
+        // extracting projectId
+        const projectId = event.dataTransfer.getData('text/plain');
+        projectState.moveProject(projectId, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished);
+    }
+    dragLeaveHandler(_) {
+        const listEl = this.element.querySelector('ul');
+        // remove pink background: #ffe3ee when drop completes
+        listEl.classList.remove('droppable');
+        console.log(`Drop area detected!`);
+    }
     configure() {
+        this.element.addEventListener('dragover', this.dragOverHandler);
+        this.element.addEventListener('drop', this.dropHandler);
+        this.element.addEventListener('dragleave', this.dragLeaveHandler);
         // to register a listener function
         projectState.addListener((projects) => {
             // true => keep item in newly created Project[]
@@ -193,7 +255,7 @@ class ProjectList extends Component {
         const listId = `${this.type}-projects-list`;
         this.element.querySelector('ul').id = listId;
         // selecting <h2></h2>
-        this.element.querySelector('h2').textContent = this.type.toUpperCase() + 'PROJECTS';
+        this.element.querySelector('h2').textContent = this.type.toUpperCase() + ' PROJECTS';
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);
@@ -213,6 +275,15 @@ class ProjectList extends Component {
         }
     }
 }
+__decorate([
+    Autobinding
+], ProjectList.prototype, "dragOverHandler", null);
+__decorate([
+    Autobinding
+], ProjectList.prototype, "dropHandler", null);
+__decorate([
+    Autobinding
+], ProjectList.prototype, "dragLeaveHandler", null);
 // Singleton design pattern
 // class ProjectInput extends Component<T extends whereToRender, U extends elementToRender>
 class ProjectInput extends Component {
