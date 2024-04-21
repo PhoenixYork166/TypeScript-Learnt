@@ -1,7 +1,27 @@
-/// <reference path="drag-drop-interfaces.ts" />
-/// <reference path="project-models.ts" />
+// Drang & Drop Interfaces
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+}
 
-namespace App {
+interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+    dropHandler(event: DragEvent): void;
+    dragLeaveHandler(event: DragEvent): void;
+}
+
+// Project Type
+enum ProjectStatus { Active, Finished }
+
+class Project {
+    constructor(
+        public id: string, 
+        public title: string, 
+        public description: string,
+        public people: number,
+        public status: ProjectStatus
+    ) {}
+}
 
 // Project State Management
 type Listener<T> = (items: T[]) => void;
@@ -423,7 +443,6 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     }
 }
 
-new ProjectInput();
-new ProjectList('active');
-new ProjectList('finished');
-}
+const projectInput = new ProjectInput();
+const activeProjectList = new ProjectList('active');
+const finishedProjectList = new ProjectList('finished');
