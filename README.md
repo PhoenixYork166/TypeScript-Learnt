@@ -1,10 +1,9 @@
 # TypeScript
-![Sass](https://puresourcecode.com/wp-content/uploads/2020/06/typescript-wallpaper.png)
+![TypeScript](https://puresourcecode.com/wp-content/uploads/2020/06/typescript-wallpaper.png)
 
-# Hey brothers & sisters
+## Let's learn TypeScript together :D
+## See TypeScript-Tutorial.docx
 
-## Let's learn TypeScript together in 2024 :D
-## See TypeScript.docx
 ## i. TypeScript's typing system
 ## ii. TypeScript compiler configuration tsconfig.json 
 ## iii. TypeScript OOP Classes & Interfaces
